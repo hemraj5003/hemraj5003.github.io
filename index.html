@@ -1,10 +1,482 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Hemraj Blog</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Hemraj Notes — Cybersecurity Blog</title>
+
+  <meta name="description" content="Cybersecurity blogs, writeups, labs and notes by Hemraj."/>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    /* SMALL EXTRA STYLES FOR BLOG LAYOUT */
+
+    .blog-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .blog-hero-inner {
+      max-width: 760px;
+    }
+
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#0aff9d22,#00d4ff22);
+      border: 1px solid rgba(10,255,157,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--neon-green);
+      box-shadow: var(--glow-green);
+    }
+
+    .profile-meta h2 {
+      font-family: var(--font-display);
+      letter-spacing: 1px;
+      font-size: 26px;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .profile-meta p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .blog-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px,7vw,78px);
+      line-height: 0.95;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+    }
+
+    .blog-main-title span {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--neon-green);
+    }
+
+    .blog-sub {
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.9;
+      font-size: 17px;
+      margin-bottom: 34px;
+    }
+
+    .mini-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .mini-link {
+      padding: 10px 16px;
+      border: 1px solid var(--border-subtle);
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      transition: 0.3s;
+    }
+
+    .mini-link:hover {
+      border-color: var(--neon-green);
+      color: var(--neon-green);
+      background: rgba(10,255,157,0.05);
+    }
+
+    .latest-posts {
+      padding: 80px 0 100px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .posts-head {
+      margin-bottom: 40px;
+    }
+
+    .posts-head h3 {
+      font-family: var(--font-display);
+      font-size: 30px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .posts-head p {
+      color: var(--text-secondary);
+      max-width: 500px;
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 20px;
+    }
+
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 28px;
+      transition: 0.4s var(--transition);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-card::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(10,255,157,0.04),transparent);
+      opacity:0;
+      transition:0.4s;
+    }
+
+    .post-card:hover::before {
+      opacity:1;
+    }
+
+    .post-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(10,255,157,0.2);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+    }
+
+    .post-meta {
+      display:flex;
+      gap:12px;
+      margin-bottom:16px;
+      font-family:var(--font-mono);
+      font-size:10px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .post-date {
+      color:var(--text-dim);
+    }
+
+    .post-tag {
+      color:var(--neon-green);
+    }
+
+    .post-title {
+      font-family:var(--font-display);
+      color:var(--text-primary);
+      font-size:22px;
+      line-height:1.3;
+      margin-bottom:14px;
+      transition:0.3s;
+    }
+
+    .post-card:hover .post-title {
+      color:var(--neon-green);
+    }
+
+    .post-desc {
+      color:var(--text-secondary);
+      line-height:1.8;
+      font-size:15px;
+      margin-bottom:20px;
+    }
+
+    .read-post {
+      font-family:var(--font-mono);
+      font-size:11px;
+      letter-spacing:1px;
+      color:var(--neon-cyan);
+    }
+
+    @media(max-width:768px){
+
+      .posts-grid {
+        grid-template-columns:1fr;
+      }
+
+      .profile-row {
+        align-items:flex-start;
+      }
+
+      .blog-main-title {
+        letter-spacing:-1px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello World</h1>
-  <p>My cybersecurity blog is live.</p>
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+
+    <a href="#" class="nav-logo">
+      HEMRAJ<span>/NOTES</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#">home</a></li>
+      <li><a href="#">blogs</a></li>
+      <li><a href="#">writeups</a></li>
+      <li><a href="#">projects</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- HERO -->
+  <section class="blog-hero">
+
+    <div class="hero-bg-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+
+      <div class="blog-hero-inner fade-up">
+
+        <div class="profile-row">
+
+          <div class="profile-avatar">
+            H
+          </div>
+
+          <div class="profile-meta">
+            <h2>Hemraj Ghanchi</h2>
+            <p>Cybersecurity Student • Labs • Writeups • Notes</p>
+          </div>
+
+        </div>
+
+        <h1 class="blog-main-title">
+          Cybersecurity <span>Notes</span><br/>
+          & Learning Logs
+        </h1>
+
+        <p class="blog-sub">
+          Personal blogs, lab writeups, automation experiments,
+          SIEM learning, detection engineering notes and cybersecurity projects.
+        </p>
+
+        <div class="mini-links">
+          <a href="#" class="mini-link">GitHub</a>
+          <a href="#" class="mini-link">LinkedIn</a>
+          <a href="#" class="mini-link">Resume</a>
+          <a href="#" class="mini-link">Email</a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- POSTS -->
+  <section class="latest-posts">
+
+    <div class="container">
+
+      <div class="posts-head fade-up">
+        <h3>Latest Posts</h3>
+        <p>
+          Random thoughts, labs, projects and technical breakdowns.
+        </p>
+      </div>
+
+      <div class="posts-grid">
+
+        <a href="#" class="post-card fade-up">
+
+          <div class="post-meta">
+            <span class="post-date">May 2026</span>
+            <span class="post-tag">SOC LAB</span>
+          </div>
+
+          <h2 class="post-title">
+            Building My First Detection Engineering Lab
+          </h2>
+
+          <p class="post-desc">
+            Creating a beginner SOC environment using Wazuh, Sysmon,
+            Windows event logs and custom alerting rules.
+          </p>
+
+          <span class="read-post">
+            READ ARTICLE →
+          </span>
+
+        </a>
+
+        <a href="#" class="post-card fade-up">
+
+          <div class="post-meta">
+            <span class="post-date">May 2026</span>
+            <span class="post-tag">AUTOMATION</span>
+          </div>
+
+          <h2 class="post-title">
+            Automating Threat Intel Collection Using n8n
+          </h2>
+
+          <p class="post-desc">
+            Experimenting with VirusTotal APIs, webhook pipelines,
+            enrichment workflows and IOC parsing.
+          </p>
+
+          <span class="read-post">
+            READ ARTICLE →
+          </span>
+
+        </a>
+
+        <a href="#" class="post-card fade-up">
+
+          <div class="post-meta">
+            <span class="post-date">April 2026</span>
+            <span class="post-tag">CTF</span>
+          </div>
+
+          <h2 class="post-title">
+            TryHackMe Enumeration Notes
+          </h2>
+
+          <p class="post-desc">
+            Notes from practicing Linux privilege escalation,
+            SMB enumeration and Active Directory basics.
+          </p>
+
+          <span class="read-post">
+            READ ARTICLE →
+          </span>
+
+        </a>
+
+        <a href="#" class="post-card fade-up">
+
+          <div class="post-meta">
+            <span class="post-date">April 2026</span>
+            <span class="post-tag">WEB SECURITY</span>
+          </div>
+
+          <h2 class="post-title">
+            Beginner Mistakes While Learning Bug Bounty
+          </h2>
+
+          <p class="post-desc">
+            Things I learned while testing web applications,
+            recon workflows and handling scope correctly.
+          </p>
+
+          <span class="read-post">
+            READ ARTICLE →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-inner">
+
+        <div class="footer-copy">
+          © 2026 <span>Hemraj Notes</span> — Built slowly while learning cybersecurity.
+        </div>
+
+        <div class="footer-status">
+          <span class="status-dot"></span>
+          currently learning
+        </div>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script>
+
+    // NAV SCROLL
+
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+
+      if(window.scrollY > 30){
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+    });
+
+    // FADE UP
+
+    const observer = new IntersectionObserver((entries)=>{
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+
+      });
+
+    },{ threshold:0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el=>{
+      observer.observe(el);
+    });
+
+    // CUSTOM CURSOR
+
+    const cursor = document.getElementById('cursor');
+    const trail = document.getElementById('cursor-trail');
+
+    document.addEventListener('mousemove',(e)=>{
+
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
+
+    });
+
+  </script>
+
 </body>
 </html>
